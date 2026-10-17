@@ -41,9 +41,11 @@ export default function Footer() {
     setNewsletterSubmitting(true);
 
     try {
+      const consent = event.currentTarget.elements.namedItem("newsletterConsent");
       await submitSchoolMessage({
         type: "newsletter",
         email: email.trim(),
+        consent: consent.checked,
       });
       setNewsletterMessage("You are subscribed to school updates.");
       setEmail("");
@@ -121,6 +123,13 @@ export default function Footer() {
                   required
                   disabled={newsletterSubmitting}
                 />
+                <label className="site-footer-newsletter-consent">
+                  <input type="checkbox" required name="newsletterConsent" />
+                  <span>
+                    I agree to receive school updates by email. Contact the
+                    school to unsubscribe.
+                  </span>
+                </label>
                 <button type="submit" disabled={newsletterSubmitting}>
                   {newsletterSubmitting ? (
                     <>
@@ -143,7 +152,7 @@ export default function Footer() {
                 </p>
               )}
               <p className="site-footer-newsletter-note">
-                School updates only. Contact us to unsubscribe. Read our{" "}
+                Subscribe to occasional school updates. Read our{" "}
                 <Link to="/privacy-policy">privacy policy</Link>.
               </p>
             </section>

@@ -75,16 +75,17 @@ export default function App() {
       },
       { threshold: 0.01, rootMargin: "80px 0px 80px 0px" }
     );
+    const revealFallback = window.setTimeout(() => {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      observer.disconnect();
+    }, 1800);
 
     document.documentElement.classList.add("site-motion-ready");
     elements.forEach((element) => observer.observe(element));
-    const revealFallback = window.setTimeout(() => {
-      elements.forEach((element) => element.classList.add("is-visible"));
-    }, 2500);
 
     return () => {
-      observer.disconnect();
       window.clearTimeout(revealFallback);
+      observer.disconnect();
     };
   }, [pathname]);
 

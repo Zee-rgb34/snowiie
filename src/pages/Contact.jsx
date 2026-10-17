@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction.jsx";
-import ContactHero from "../components/ContactHero.jsx";
 import Icon from "../components/Icon.jsx";
+import ContactHero from "../components/ContactHero.jsx";
 import SeoMeta from "../components/SeoMeta.jsx";
 import { submitSchoolMessage } from "../lib/schoolSubmissions.js";
 import { getCanonicalUrl } from "../site.js";
@@ -152,12 +152,7 @@ export default function Contact() {
 
       <ContactHero />
 
-      <section
-        className="contact-main-section"
-        id="contact-enquiry"
-        aria-label="Send an enquiry"
-        data-reveal="slide-right"
-      >
+      <section id="contact-enquiry" className="contact-main-section" aria-label="Send an enquiry" data-reveal="slide-right">
         <div className="w contact-main-grid">
           <div className="contact-aside">
             <h2>How can we help?</h2>
@@ -444,7 +439,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="contact-location-section" aria-labelledby="contact-location-title" data-reveal="slide-right">
+      <section id="visit-school" className="contact-location-section" aria-labelledby="contact-location-title" data-reveal="slide-right">
         <div className="w contact-location-layout">
           <div className="contact-location-copy">
             <p className="contact-kicker">VISIT US</p>

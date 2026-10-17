@@ -14,29 +14,31 @@ export default function ContactHero() {
       <div className="contact-hero-overlay" aria-hidden="true" />
 
       <div className="w contact-hero-inner">
-        <p className="contact-kicker">CONTACT SNOW WHITE</p>
-        <h1 id="contact-hero-title">
-          We're here to <span>help.</span>
-        </h1>
-        <p className="contact-hero-copy">
-          Talk with our team about admissions, a school visit, or any questions
-          you have about Snow White Private Schools.
-        </p>
+        <div className="contact-hero-copy">
+          <p className="contact-kicker">CONTACT SNOW WHITE</p>
+          <h1 id="contact-hero-title">
+            We're here to <span>help.</span>
+          </h1>
+          <p className="contact-intro-copy">
+            Talk with our team about admissions, a school visit, or any
+            questions you have about Snow White Private Schools.
+          </p>
 
-        <div className="contact-hero-actions">
-          <a className="btn contact-hero-primary" href="#contact-enquiry">
-            Send an enquiry
-            <span aria-hidden="true">↓</span>
-          </a>
-          <a className="btn contact-hero-secondary" href="tel:+265992686891">
-            Call 0992 68 68 91
-          </a>
+          <div className="contact-hero-actions">
+            <a className="btn" href="#contact-enquiry">
+              Send an enquiry
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a className="contact-hero-secondary" href="tel:+265992686891">
+              Call 0992 68 68 91
+            </a>
+          </div>
+
+          <Link className="contact-hero-secondary contact-hero-location" to="/contact#visit-school">
+            Naperi, Blantyre, Malawi
+            <span aria-hidden="true">↗</span>
+          </Link>
         </div>
-
-        <Link className="contact-hero-location" to="#contact-location-title">
-          Naperi, Blantyre, Malawi
-          <span aria-hidden="true">↗</span>
-        </Link>
       </div>
     </section>
   );

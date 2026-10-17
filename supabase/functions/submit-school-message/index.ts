@@ -1,4 +1,5 @@
 const inbox = "director.snowwhiteschools@gmail.com";
+
 const securityHeaders = {
   "Cache-Control": "no-store",
   "Content-Type": "application/json",
@@ -6,35 +7,31 @@ const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 
-function getAllowedOrigin() {
+function isAllowedOrigin(origin: string) {
   const configuredOrigin = Deno.env.get("ALLOWED_ORIGIN")?.replace(/\/+$/, "");
-  if (!configuredOrigin) return null;
 
+  if (!configuredOrigin) return false;
   try {
     const url = new URL(configuredOrigin);
     const isLocalDevelopment =
       url.protocol === "http:" &&
       ["localhost", "127.0.0.1"].includes(url.hostname);
 
-    if (
-      url.origin !== configuredOrigin ||
-      (url.protocol !== "https:" && !isLocalDevelopment)
-    ) {
-      return null;
-    }
-
-    return url.origin;
+    return (
+      url.origin === configuredOrigin &&
+      origin === configuredOrigin &&
+      (url.protocol === "https:" || isLocalDevelopment)
+    );
   } catch {
-    return null;
+    return false;
   }
 }
 
 function responseHeaders(origin: string | null) {
   const headers = new Headers(securityHeaders);
-  const allowedOrigin = getAllowedOrigin();
 
-  if (origin && allowedOrigin && origin === allowedOrigin) {
-    headers.set("Access-Control-Allow-Origin", allowedOrigin);
+  if (origin && isAllowedOrigin(origin)) {
+    headers.set("Access-Control-Allow-Origin", origin);
     headers.set(
       "Access-Control-Allow-Headers",
       "authorization, x-client-info, apikey, content-type"
@@ -46,7 +43,7 @@ function responseHeaders(origin: string | null) {
   return headers;
 }
 
-function respond(
+function createResponse(
   status: number,
   body: Record<string, unknown>,
   headers: HeadersInit = securityHeaders
@@ -59,10 +56,10 @@ function respond(
 
 function clean(value: unknown, limit: number) {
   if (typeof value !== "string") return "";
-  return value
+  const cleaned = value
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-    .trim()
-    .slice(0, limit);
+    .trim();
+  return cleaned.length <= limit ? cleaned : "";
 }
 
 async function readJsonBody(request: Request) {
@@ -125,7 +122,6 @@ async function sendEmail(subject: string, text: string) {
 async function withinSubmissionLimit(request: Request) {
   const address =
     request.headers.get("cf-connecting-ip") ??
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
     request.headers.get("x-real-ip");
   const projectUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -170,18 +166,18 @@ async function withinSubmissionLimit(request: Request) {
 Deno.serve(async (request) => {
   const origin = request.headers.get("origin");
   const headers = responseHeaders(origin);
-  const allowedOrigin = getAllowedOrigin();
+  const respond = (status: number, body: Record<string, unknown>) =>
+    createResponse(status, body, headers);
+  const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN")?.replace(/\/+$/, "");
 
   if (!allowedOrigin) {
-    return respond(
-      503,
-      { error: "The website submission service is not configured." },
-      headers
-    );
+    return respond(503, {
+      error: "The website submission service is not configured.",
+    });
   }
 
-  if (!origin || origin !== allowedOrigin) {
-    return respond(403, { error: "This website origin is not allowed." }, headers);
+  if (!origin || !isAllowedOrigin(origin)) {
+    return respond(403, { error: "This website origin is not allowed." });
   }
 
   if (request.method === "OPTIONS") {
@@ -189,16 +185,16 @@ Deno.serve(async (request) => {
   }
 
   if (request.method !== "POST") {
-    return respond(405, { error: "Use POST to submit a message." }, headers);
+    return respond(405, { error: "Use POST to submit a message." });
   }
 
   if (!request.headers.get("content-type")?.includes("application/json")) {
-    return respond(415, { error: "Send form data as JSON." }, headers);
+    return respond(415, { error: "Send form data as JSON." });
   }
 
   const contentLength = Number(request.headers.get("content-length") ?? 0);
   if (contentLength > 10000) {
-    return respond(413, { error: "The submitted message is too large." }, headers);
+    return respond(413, { error: "The submitted message is too large." });
   }
 
   let body: Record<string, unknown>;
@@ -209,18 +205,15 @@ Deno.serve(async (request) => {
       parsedBody === null ||
       Array.isArray(parsedBody)
     ) {
-      return respond(400, { error: "Please check the submitted information." }, headers);
+      return respond(400, { error: "Please check the submitted information." });
     }
     body = parsedBody as Record<string, unknown>;
-  } catch (error) {
-    if (error instanceof RangeError) {
-      return respond(413, { error: "The submitted message is too large." }, headers);
-    }
-    return respond(400, { error: "Please check the submitted information." }, headers);
+  } catch {
+    return respond(400, { error: "Please check the submitted information." });
   }
 
   if (clean(body.website, 200)) {
-    return respond(200, { ok: true }, headers);
+    return respond(200, { ok: true });
   }
 
   if (body.type === "contact") {
@@ -237,28 +230,28 @@ Deno.serve(async (request) => {
     ) {
       return respond(400, {
         error: "Please provide a valid name, email, topic, and message.",
-      }, headers);
+      });
     }
 
     try {
       if (!(await withinSubmissionLimit(request))) {
         return respond(429, {
           error: "Too many submissions. Please wait a little before trying again.",
-        }, headers);
+        });
       }
 
       await sendEmail(
         `Website enquiry: ${topic}`,
         `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`
       );
-      return respond(200, { ok: true }, headers);
+      return respond(200, { ok: true });
     } catch (error) {
       console.error("Could not deliver a school enquiry email.");
       return respond(502, {
         error: error instanceof Error
           ? error.message
           : "Your message could not be sent. Please try again.",
-      }, headers);
+      });
     }
   }
 
@@ -274,7 +267,7 @@ Deno.serve(async (request) => {
     ) {
       return respond(400, {
         error: "Please add your name, a testimonial, and public display consent.",
-      }, headers);
+      });
     }
 
     const projectUrl = Deno.env.get("SUPABASE_URL");
@@ -283,7 +276,7 @@ Deno.serve(async (request) => {
     if (!projectUrl || !serviceRoleKey) {
       return respond(503, {
         error: "Testimonials cannot be shared right now. Please try again later.",
-      }, headers);
+      });
     }
 
     let insertResponse: Response;
@@ -291,7 +284,7 @@ Deno.serve(async (request) => {
       if (!(await withinSubmissionLimit(request))) {
         return respond(429, {
           error: "Too many submissions. Please wait a little before trying again.",
-        }, headers);
+        });
       }
 
       insertResponse = await fetch(
@@ -314,14 +307,14 @@ Deno.serve(async (request) => {
     } catch {
       return respond(502, {
         error: "Your testimonial could not be published. Please try again.",
-      }, headers);
+      });
     }
 
     if (!insertResponse.ok) {
       console.error("Could not publish a school testimonial.");
       return respond(502, {
         error: "Your testimonial could not be published. Please try again.",
-      }, headers);
+      });
     }
 
     let notificationSent = true;
@@ -334,7 +327,7 @@ Deno.serve(async (request) => {
       notificationSent = false;
     }
 
-    return respond(200, { ok: true, published: true, notificationSent }, headers);
+    return respond(200, { ok: true, published: true, notificationSent });
   }
 
   if (body.type === "newsletter") {
@@ -343,9 +336,12 @@ Deno.serve(async (request) => {
 
     if (
       submittedEmail.length > 254 ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      body.consent !== true
     ) {
-      return respond(400, { error: "Please provide a valid email address." }, headers);
+      return respond(400, {
+        error: "Please provide a valid email address and consent to receive updates.",
+      });
     }
 
     const projectUrl = Deno.env.get("SUPABASE_URL");
@@ -354,14 +350,14 @@ Deno.serve(async (request) => {
     if (!projectUrl || !serviceRoleKey) {
       return respond(503, {
         error: "Subscriptions are unavailable right now. Please try again later.",
-      }, headers);
+      });
     }
 
     try {
       if (!(await withinSubmissionLimit(request))) {
         return respond(429, {
           error: "Too many submissions. Please wait a little before trying again.",
-        }, headers);
+        });
       }
 
       const response = await fetch(
@@ -370,7 +366,7 @@ Deno.serve(async (request) => {
           method: "POST",
           headers: {
             apikey: serviceRoleKey,
-            Authorization: ["Bearer", serviceRoleKey].join(" "),
+            Authorization: `******
             "Content-Type": "application/json",
             Prefer: "resolution=ignore-duplicates,return=minimal",
           },
@@ -382,17 +378,17 @@ Deno.serve(async (request) => {
         console.error("Could not store a school newsletter subscription.");
         return respond(502, {
           error: "Your subscription could not be saved. Please try again.",
-        }, headers);
+        });
       }
 
-      return respond(200, { ok: true, subscribed: true }, headers);
+      return respond(200, { ok: true, subscribed: true });
     } catch {
       console.error("Could not process a school newsletter subscription.");
       return respond(502, {
         error: "Your subscription could not be saved. Please try again.",
-      }, headers);
+      });
     }
   }
 
-  return respond(400, { error: "Choose a valid message type." }, headers);
+  return respond(400, { error: "Choose a valid message type." });
 });

@@ -21,8 +21,7 @@ export default function Header() {
             </NavLink>
           ))}
         </nav>
-        <Link className="btn" to="/contact">Enquire Now ➜</Link>
-        <button className="menu" aria-label="Menu" onClick={() => setOpen(!open)}>☰</button>
+       <button className="menu" aria-label="Menu" onClick={() => setOpen(!open)}>☰</button>
       </div>
     </header>
   );

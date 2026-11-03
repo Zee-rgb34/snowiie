@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import CallToAction from "../components/CallToAction.jsx";
 import Icon from "../components/Icon.jsx";
 import ContactHero from "../components/ContactHero.jsx";
 import SeoMeta from "../components/SeoMeta.jsx";
@@ -58,16 +57,7 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [testimonial, setTestimonial] = useState({
-    name: "",
-    relationship: "",
-    quote: "",
-    website: "",
-    consent: false,
-  });
-  const [testimonialSent, setTestimonialSent] = useState(false);
-  const [testimonialSubmitting, setTestimonialSubmitting] = useState(false);
-  const [testimonialError, setTestimonialError] = useState("");
+
   const set = (key) => (e) =>
     setForm((current) => ({ ...current, [key]: e.target.value }));
   const valid =
@@ -94,40 +84,6 @@ export default function Contact() {
     }
   };
 
-  const setTestimonialValue = (key) => (event) => {
-    const value =
-      event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value;
-    setTestimonial((current) => ({ ...current, [key]: value }));
-  };
-
-  const submitTestimonial = async (event) => {
-    event.preventDefault();
-    setTestimonialSubmitting(true);
-    setTestimonialError("");
-
-    try {
-      const result = await submitSchoolMessage({
-        type: "testimonial",
-        displayName: testimonial.name,
-        relationship: testimonial.relationship,
-        quote: testimonial.quote,
-        website: testimonial.website,
-        consent: testimonial.consent,
-      });
-      setTestimonialSent(true);
-      if (result.notificationSent === false) {
-        setTestimonialError(
-          "Your testimonial is published, but the school could not be notified by email."
-        );
-      }
-    } catch (error) {
-      setTestimonialError(error.message);
-    } finally {
-      setTestimonialSubmitting(false);
-    }
-  };
 
   return (
     <div className="contact-page">
@@ -150,7 +106,7 @@ export default function Contact() {
         }}
       />
 
-      <ContactHero />
+      <ContactHero description="Talk with our team about admissions, a school visit, or any questions you have about Snow White Private Schools." />
 
       <section id="contact-enquiry" className="contact-main-section" aria-label="Send an enquiry" data-reveal="slide-right">
         <div className="w contact-main-grid">
@@ -292,132 +248,6 @@ export default function Contact() {
         </div>
       </section>
 
-      <section
-        className="contact-testimonial-section"
-        id="share-testimonial"
-        aria-labelledby="share-testimonial-title"
-        data-reveal="scale"
-      >
-        <div className="w contact-testimonial-layout">
-          <div className="contact-testimonial-intro">
-            <p className="contact-kicker">SHARE YOUR EXPERIENCE</p>
-            <h2 id="share-testimonial-title">Tell us what Snow White means to you.</h2>
-            <p>
-              Testimonials are published on this website as soon as they are
-              submitted. Only share details you are comfortable making public.
-            </p>
-          </div>
-
-          <div className="contact-testimonial-form-panel">
-            {testimonialSent ? (
-              <div className="contact-form-success" role="status">
-                <h3>Thank you for sharing.</h3>
-                <p>Your testimonial is now included in the school carousel.</p>
-                {testimonialError && (
-                  <p className="form-error">{testimonialError}</p>
-                )}
-              </div>
-            ) : (
-              <form
-                className="contact-form"
-                onSubmit={submitTestimonial}
-                aria-busy={testimonialSubmitting}
-              >
-                <div>
-                  <label htmlFor="testimonial-name">Name to display <span>Required</span></label>
-                  <input
-                    id="testimonial-name"
-                    name="displayName"
-                    value={testimonial.name}
-                    onChange={setTestimonialValue("name")}
-                    minLength={2}
-                    maxLength={80}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="testimonial-relationship">Your connection to the school</label>
-                  <input
-                    id="testimonial-relationship"
-                    name="relationship"
-                    placeholder="For example, parent or former learner"
-                    value={testimonial.relationship}
-                    onChange={setTestimonialValue("relationship")}
-                    maxLength={80}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="testimonial-quote">Your testimonial <span>Required</span></label>
-                  <textarea
-                    id="testimonial-quote"
-                    name="quote"
-                    rows={5}
-                    value={testimonial.quote}
-                    onChange={setTestimonialValue("quote")}
-                    minLength={20}
-                    maxLength={1000}
-                    required
-                  />
-                </div>
-
-                <div className="submission-honeypot" aria-hidden="true">
-                  <label htmlFor="testimonial-website">Website</label>
-                  <input
-                    id="testimonial-website"
-                    name="website"
-                    value={testimonial.website}
-                    onChange={setTestimonialValue("website")}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <label className="testimonial-consent">
-                  <input
-                    type="checkbox"
-                    name="consent"
-                    checked={testimonial.consent}
-                    onChange={setTestimonialValue("consent")}
-                    required
-                  />
-                  <span>
-                    I agree to have my name and testimonial shown publicly on
-                    the school website.
-                  </span>
-                </label>
-
-                {testimonialError && !testimonialSent && (
-                  <p className="form-error" role="alert">{testimonialError}</p>
-                )}
-
-                <button
-                  className="btn contact-submit-button"
-                  type="submit"
-                  disabled={
-                    testimonial.name.trim().length < 2 ||
-                    testimonial.quote.trim().length < 20 ||
-                    !testimonial.consent ||
-                    testimonialSubmitting
-                  }
-                >
-                  {testimonialSubmitting ? (
-                    <>
-                      <span className="form-spinner" aria-hidden="true" />
-                      Sharing...
-                    </>
-                  ) : (
-                    "Share testimonial"
-                  )}
-                  {!testimonialSubmitting && <span aria-hidden="true">→</span>}
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-
       <section className="contact-help-section" data-reveal="slide-left">
         <div className="w">
           <div className="contact-section-heading">
@@ -509,7 +339,6 @@ export default function Contact() {
         </div>
       </section>
 
-      <CallToAction />
     </div>
   );
 }

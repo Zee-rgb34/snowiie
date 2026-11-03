@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import schoolCommunity from "../assets/school-community.jpg";
 
-export default function ContactHero() {
+export default function ContactHero({ description }) {
   return (
     <section className="contact-hero" aria-labelledby="contact-hero-title">
       <img
@@ -19,10 +19,7 @@ export default function ContactHero() {
           <h1 id="contact-hero-title">
             We're here to <span>help.</span>
           </h1>
-          <p className="contact-intro-copy">
-            Talk with our team about admissions, a school visit, or any
-            questions you have about Snow White Private Schools.
-          </p>
+          <p className="contact-intro-copy">{description}</p>
 
           <div className="contact-hero-actions">
             <a className="btn" href="#contact-enquiry">

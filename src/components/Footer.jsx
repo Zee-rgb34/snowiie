@@ -2,24 +2,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Brand from "./Brand.jsx";
 import Icon from "./Icon.jsx";
-import { contactInfo } from "../data.js";
 import { submitSchoolMessage } from "../lib/schoolSubmissions.js";
 
 const quickLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About Us" },
-  { to: "/about", label: "Academics" },
-  { to: "/contact", label: "Admissions" },
   { to: "/contact", label: "Contact" },
 ];
 
-const institutionalLinks = [
-  { to: "/about", label: "Subjects" },
-  { to: "/about", label: "News" },
-  { to: "/about", label: "Gallery" },
-  { to: "/about", label: "Results Portal" },
-  { to: "/about", label: "School Life" },
-];
+
 
 const contactIcons = ["map-pin", "phone", "mail", "phone", "message", "link"];
 
@@ -66,17 +57,6 @@ export default function Footer() {
               Empowering learners through academic excellence, innovation,
               and character in a caring school community.
             </p>
-
-            <div className="site-footer-contact">
-              {contactInfo.map((detail, index) => (
-                <p className="site-footer-contact-item" key={detail}>
-                  <span className="site-footer-contact-icon" aria-hidden="true">
-                    <Icon name={contactIcons[index]} />
-                  </span>
-                  <span>{detail}</span>
-                </p>
-              ))}
-            </div>
           </div>
 
           <nav className="site-footer-links" aria-label="Quick links">
@@ -86,76 +66,18 @@ export default function Footer() {
             ))}
           </nav>
 
-          <nav className="site-footer-links" aria-label="Institutional links">
-            <h2>Institutional</h2>
-            {institutionalLinks.map((item) => (
-              <Link to={item.to} key={item.label}>{item.label}</Link>
-            ))}
-          </nav>
+          
 
           <div className="site-footer-utility">
             <section className="site-footer-admissions">
               <h2>Ready to Join Us?</h2>
               <p>Contact our team to learn about admissions and available places.</p>
               <Link to="/contact" className="site-footer-apply-button">
-                Apply Now
+                click here
                 <span aria-hidden="true">↗</span>
               </Link>
             </section>
-
-            <section className="site-footer-newsletter" aria-labelledby="footer-newsletter-title">
-              <h2 id="footer-newsletter-title">Stay Updated</h2>
-              <form
-                className="site-footer-newsletter-form"
-                onSubmit={handleNewsletterSubmit}
-                aria-busy={newsletterSubmitting}
-              >
-                <label className="sr-only" htmlFor="footer-email">Your email address</label>
-                <input
-                  id="footer-email"
-                  type="email"
-                  name="email"
-                  maxLength={254}
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Enter your email"
-                  autoComplete="email"
-                  required
-                  disabled={newsletterSubmitting}
-                />
-                <label className="site-footer-newsletter-consent">
-                  <input type="checkbox" required name="newsletterConsent" />
-                  <span>
-                    I agree to receive school updates by email. Contact the
-                    school to unsubscribe.
-                  </span>
-                </label>
-                <button type="submit" disabled={newsletterSubmitting}>
-                  {newsletterSubmitting ? (
-                    <>
-                      <span className="form-spinner" aria-hidden="true" />
-                      Subscribing
-                    </>
-                  ) : (
-                    "Subscribe"
-                  )}
-                </button>
-              </form>
-              {newsletterMessage && (
-                <p className="site-footer-newsletter-message" role="status">
-                  {newsletterMessage}
-                </p>
-              )}
-              {newsletterError && (
-                <p className="site-footer-newsletter-message is-error" role="alert">
-                  {newsletterError}
-                </p>
-              )}
-              <p className="site-footer-newsletter-note">
-                Subscribe to occasional school updates. Read our{" "}
-                <Link to="/privacy-policy">privacy policy</Link>.
-              </p>
-            </section>
+            
           </div>
         </div>
 

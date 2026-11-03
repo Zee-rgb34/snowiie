@@ -1,15 +1,22 @@
-
 import { Link } from "react-router-dom";
 
 import Icon from "../components/Icon.jsx";
-import CallToAction from "../components/CallToAction.jsx";
 import SeoMeta from "../components/SeoMeta.jsx";
 import SchoolHero from "../components/SchoolHero.jsx";
-import SchoolTestimonials from "../components/SchoolTestimonials.jsx";
-import { values, environment, why } from "../data.js";
+import { values, environment } from "../data.js";
 
 import hero from "../assets/school-campus.jpg";
 import studentActivities from "../assets/student-activities.jpg";
+
+// School activities images
+import culturalDay from "../../images/FB_IMG_1791890023063.jpg.jpeg";
+import graduation from "../../images/grad (1).jpeg";
+import seniorTrip from "../../images/park.jpeg";
+import juniorTrip from "../../images/FB_IMG_1791889901395.jpg.jpeg";
+import spelling from "../../images/sp.jpeg";
+import sports from "../../images/sports.jpeg";
+import xmas from "../../images/xmas.jpeg";
+
 
 /* =========================================================
    ABOUT PAGE
@@ -17,19 +24,60 @@ import studentActivities from "../assets/student-activities.jpg";
 
 export default function About() {
   const gallery = environment.slice(0, 3);
-  const stats = [
-    { value: values.length, label: "Guiding Principles" },
-    { value: why.length, label: "Learning Priorities" },
-    { value: environment.length, label: "Areas of School Life" },
+
+  const schoolActivities = [
+    {
+      title: "Spelling Bee",
+      description:
+        "Our Spelling Bee programme helps students improve their spelling, grammar and language skills while building confidence and encouraging a love for learning.",
+      image:spelling,
+    },
+    {
+      title: "Sports Day",
+      description:
+        "Sports Day takes place every Wednesday from 1:00 p.m. to 2:30 p.m. Students from our two campuses sometimes compete against each other, and we also participate in competitions with other schools. Snow White Schools has competed against Baptist and Southend, winning both football and netball matches.",
+      image:sports,
+    },
+    {
+      title: "Graduation and Awards Ceremony",
+      description:
+        "Every year, we celebrate Reception and Grade 7 students through graduation ceremonies combined with awards presentations for all classes. Alumni's are also invited to give speeches and inspire our current learners.",
+      image: graduation,
+    },
+    {
+      title: "Cultural Day",
+      description:
+        "Cultural Day gives students an opportunity to showcase local and international cultures. Through these celebrations, learners develop cultural awareness, respect and appreciation for different traditions.",
+      image: culturalDay,
+    },
+    {
+      title: "Senior Students' Educational Trips",
+      description:
+        "During the third term, senior students visit game reserves, parks, colleges and universities. These educational trips allow learners to explore new environments, gain practical knowledge and experience learning beyond the classroom.",
+      image: seniorTrip,
+    },
+    {
+      title: "Preschool and Junior Students' Trips",
+      description:
+        "During the third term, preschool and junior students enjoy educational and recreational trips to Gelatos and other fun places. These outings provide opportunities for exploration, enjoyment and learning outside the classroom.",
+      image: juniorTrip,
+    },
+    {
+      title: "School Celebrations and Team Building",
+      description:
+        "Our school also holds Christmas parties and celebrations every December. At the time, each year teachers participate in team-building activities, including trips to the lake, helping strengthen teamwork and relationships among staff.",
+      image: xmas,
+    },
   ];
 
   return (
     <div className="about-page">
       <SeoMeta
         title="About us"
-        description="Learn about Snow White Private Schools in Naperi, Blantyre, Malawi, our values, academic approach, and supportive school community."
+        description="Learn about Snow White Private Schools in Naperi, Blantyre, Malawi, our values, academic approach, school activities and supportive school community."
         pathname="/about"
       />
+
       <SchoolHero
         eyebrow="Discover Snow White Private Schools"
         title="About Us."
@@ -43,17 +91,21 @@ export default function About() {
       />
 
       {/* INTRODUCTION */}
-      <section className="about-introduction" id="about-story" data-reveal="slide-left">
+      <section
+        className="about-introduction"
+        id="about-story"
+        data-reveal="slide-left"
+      >
         <div className="w about-introduction-layout">
           <div className="about-introduction-copy">
             <span className="about-eyebrow">ABOUT SNOW WHITE</span>
+
             <h2>
-              Growing Together Through <span>Quality Education.</span>
+              Our History <span>and Growth</span>
             </h2>
+
             <p>
-              We are committed to creating a learning environment where
-              academic development, good character and personal growth
-              work hand in hand.
+              Snow White Schools was established in 1995 by Ms. Lilian Banda, a teacher who began the institution as a preschool. Over the years, the school has grown and developed to accommodate more than 200 students. 
             </p>
           </div>
 
@@ -75,6 +127,7 @@ export default function About() {
               <span className="about-highlight-icon" aria-hidden="true">
                 <Icon name={value.icon} />
               </span>
+
               <h3>{value.title}</h3>
               <p>{value.text}</p>
             </article>
@@ -82,17 +135,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-stats" aria-label="School overview" data-reveal="scale">
-        <div className="w about-stats-grid">
-          {stats.map((stat) => (
-            <div className="about-stat" key={stat.label}>
-              <span>{stat.value}</span>
-              <p>{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      {/* OUR APPROACH */}
       <section className="about-approach" data-reveal="slide-right">
         <div className="w about-approach-layout">
           <div className="about-approach-image-wrap">
@@ -106,57 +149,72 @@ export default function About() {
 
           <div className="about-approach-copy">
             <span className="about-eyebrow">OUR APPROACH</span>
+
             <h2>
               Learning With Purpose. <span>Growing Together.</span>
             </h2>
+
             <p>
               We build strong academic foundations while helping each learner
               develop confidence, responsibility and a lasting curiosity about
               the world around them.
             </p>
+          </div>
+        </div>
+      </section>
 
-            <div className="about-approach-points">
-              <div>
-                <h3>Learn</h3>
-                <p>Build knowledge and understanding step by step.</p>
-              </div>
-              <div>
-                <h3>Participate</h3>
-                <p>Explore interests and contribute to school life.</p>
-              </div>
-              <div>
-                <h3>Grow</h3>
-                <p>Develop good character and confidence for the future.</p>
-              </div>
+      {/* SCHOOL ACTIVITIES */}
+      <section className="about-activities" data-reveal="fade-up">
+        <div className="w">
+          <div className="about-activities-heading">
+            <div>
+              <span className="about-eyebrow">BEYOND THE CLASSROOM</span>
+
+              <h2>
+                Activities That Make <span>Learning Meaningful.</span>
+              </h2>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="about-community" data-reveal="fade-up">
-        <div className="w about-community-inner">
-          <div>
-            <span className="about-eyebrow">OUR SCHOOL COMMUNITY</span>
-            <h2>
-              Learning Is Stronger <span>Together.</span>
-            </h2>
-            <p>
-              Families and school share an important role in every learner's
-              progress. We value open communication and the encouragement that
-              helps children feel supported at school and at home.
-            </p>
+          <div className="about-activities-grid">
+            {schoolActivities.map((activity, index) => (
+              <article
+                className={`about-activity-card ${
+                  activity.image ? "has-image" : "no-image"
+                }`}
+                key={activity.title}
+              >
+                {activity.image ? (
+                  <div className="about-activity-image">
+                    <img
+                      src={activity.image}
+                      alt={activity.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : (
+                  <div className="about-activity-icon" aria-hidden="true">
+                    <Icon name={activity.icon} />
+                  </div>
+                )}
+
+                <div className="about-activity-content">
+                  <span className="about-activity-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <h3>{activity.title}</h3>
+
+                  <p>{activity.description}</p>
+                </div>
+              </article>
+            ))}
           </div>
-
-          <Link className="about-community-link" to="/contact">
-            Talk with our team
-            <span aria-hidden="true">→</span>
-          </Link>
         </div>
       </section>
 
-      <SchoolTestimonials />
-
-      {/* LIFE AT SCHOOL */}
+      {/* LIFE AT SCHOOL GALLERY */}
       <section className="about-life" data-reveal="scale">
         <div className="w">
           <div className="about-life-heading">
@@ -167,11 +225,6 @@ export default function About() {
                 Learning Beyond <span>the Textbook.</span>
               </h2>
             </div>
-
-            <p>
-              A look at the environment in which our learners study,
-              develop and grow.
-            </p>
           </div>
 
           <div className="about-life-gallery">
@@ -196,7 +249,6 @@ export default function About() {
         </div>
       </section>
 
-      <CallToAction />
     </div>
   );
 }

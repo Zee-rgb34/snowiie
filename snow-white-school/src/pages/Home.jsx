@@ -65,6 +65,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="sec">
+        <div className="w">
+          <h2>The Five Keys:?</h2>
+          <div className="g5">
+            {fiveKeys.map((key) => (
+              <div key={key.title}>
+                <Icon name={key.icon} />
+                <b>{key.title}</b>
+                <span>{key.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <CallToAction />
     </>

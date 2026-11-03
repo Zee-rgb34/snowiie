@@ -1,5 +1,5 @@
-import classroom from "./assets/classroom-learning.jpg";
-import sports from "./assets/sports-day.jpg";
+import classroom from "./assets/classroom.jpeg";
+import sports from "./assets/sports.jpg";
 import community from "./assets/student-activities.jpg";
 
 export const environment = [
@@ -22,12 +22,3 @@ export const values = [
   { icon: "heart", title: "Our Values", text: "Discipline, respect, responsibility, excellence and care for one another." },
 ];
 
-export const contactInfo = [
-  "Location: Naperi, Blantyre, Malawi",
-  "Location: Naperi, Malawi · Naperi, Malawi",
-  "Phone: 0992 68 68 91",
-  "Email: director.snowwhiteschools@gmail.com",
-  "WhatsApp: +265 992 68 68 91",
-  "Messenger: Snow-White Private Schools",
-  "Facebook: https://www.facebook.com/share/1GvpggUdUU/",
-];

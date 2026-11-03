@@ -32,10 +32,6 @@ export default function Header() {
             </NavLink>
           ))}
         </nav>
-        <Link className="btn site-header-enquire" to="/contact">
-          Enquire Now
-          <span aria-hidden="true">→</span>
-        </Link>
         <button
           className={`menu${open ? " is-open" : ""}`}
           type="button"

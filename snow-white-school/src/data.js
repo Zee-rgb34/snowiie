@@ -28,3 +28,10 @@ export const contactInfo = [
   "Email: [Email Address Here]",
   "Opening Hours: [Opening Hours Here]",
 ];
+export const fiveKeys = [
+  { title: "Punctuality", text: "Encouraging learners to arrive on time, respect schedules and manage their time responsibly." },
+  { title: "Hard Work", text: "Inspiring learners to remain committed to their studies, put in their best effort and strive for excellence." },
+  { title: "Respect", text: "Teaching learners to value their teachers, fellow students, parents and everyone around them." },
+  { title: "Love", text: "Promoting kindness, care, compassion and positive relationships within the school community." },
+  { title: "Smartness", text: "Encouraging learners to maintain neatness, discipline, confidence and a positive attitude." },
+];

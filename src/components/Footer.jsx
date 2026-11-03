@@ -54,8 +54,7 @@ export default function Footer() {
           <div className="site-footer-brand-column">
             <Brand />
             <p className="site-footer-description">
-              Empowering learners through academic excellence, innovation,
-              and character in a caring school community.
+              Super Kids, Snow White Kids. The best foundation for a child.
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/snow-white-crest-optimized.jpg";
 
 export default function Brand() {
   return (
@@ -13,8 +13,9 @@ export default function Brand() {
         className="brand__crest"
         src={logo}
         alt=""
-        width="40"
-        height="40"
+        width="320"
+        height="321"
+        decoding="async"
       />
 
       <span className="brand__text">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import schoolCommunity from "../assets/school-community.jpg";
+import schoolCommunity from "../assets/school-community-optimized.jpg";
 
 export default function ContactHero({ description }) {
   return (
@@ -8,7 +8,9 @@ export default function ContactHero({ description }) {
         className="contact-hero-image"
         src={schoolCommunity}
         alt=""
-        fetchPriority="high"
+        width="1100"
+        height="825"
+        fetchpriority="high"
         decoding="async"
       />
       <div className="contact-hero-overlay" aria-hidden="true" />
@@ -27,7 +29,7 @@ export default function ContactHero({ description }) {
               <span aria-hidden="true">↓</span>
             </a>
             <a className="contact-hero-secondary" href="tel:+265992686891">
-              Call 0992 68 68 91
+              Call 099 268 6891
             </a>
           </div>
 

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
-import schoolLogo from "./assets/logo.jpg";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -11,9 +10,6 @@ import NotFoundPage from "./pages/NotFound.jsx";
 
 export default function App() {
   const { pathname, hash } = useLocation();
-  const [loaderPhase, setLoaderPhase] = useState(() =>
-    document.readyState === "complete" ? "hidden" : "visible"
-  );
 
   useEffect(() => {
     if (hash) {
@@ -31,26 +27,6 @@ export default function App() {
 
     window.scrollTo(0, 0);
   }, [pathname, hash]);
-
-  useEffect(() => {
-    const finishLoading = () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        setLoaderPhase("hidden");
-        return;
-      }
-
-      setLoaderPhase("leaving");
-      window.setTimeout(() => setLoaderPhase("hidden"), 420);
-    };
-
-    if (document.readyState === "complete") {
-      finishLoading();
-      return undefined;
-    }
-
-    window.addEventListener("load", finishLoading, { once: true });
-    return () => window.removeEventListener("load", finishLoading);
-  }, []);
 
   useEffect(() => {
     const elements = document.querySelectorAll("[data-reveal]");
@@ -78,7 +54,7 @@ export default function App() {
     const revealFallback = window.setTimeout(() => {
       elements.forEach((element) => element.classList.add("is-visible"));
       observer.disconnect();
-    }, 1800);
+    }, 4000);
 
     document.documentElement.classList.add("site-motion-ready");
     elements.forEach((element) => observer.observe(element));
@@ -91,21 +67,6 @@ export default function App() {
 
   return (
     <>
-      {loaderPhase !== "hidden" && (
-        <div
-          className="site-loader"
-          data-phase={loaderPhase}
-          role="status"
-          aria-label="Loading Snow White Private Schools"
-        >
-          <div className="site-loader-mark">
-            <span className="site-loader-orbit" aria-hidden="true" />
-            <img src={schoolLogo} alt="" width="60" height="60" />
-          </div>
-          <p className="site-loader-name">SNOW WHITE</p>
-          <p className="site-loader-label">PRIVATE SCHOOLS</p>
-        </div>
-      )}
       <Header />
       <main>
         <Routes>

@@ -25,6 +25,49 @@ export const SITE_ORIGIN = getVerifiedSiteOrigin(
   import.meta.env.VITE_SITE_ORIGIN || ""
 );
 
+export const SCHOOL_ORGANIZATION = {
+  "@type": ["EducationalOrganization", "School"],
+  name: APP_NAME,
+  alternateName: "Snow White Schools",
+  slogan: "Super Kids, Snow White Kids",
+  foundingDate: "1995",
+  founder: {
+    "@type": "Person",
+    name: "Lilian Banda",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Naperi",
+    addressRegion: "Blantyre",
+    addressCountry: "MW",
+  },
+  telephone: "+265992686891",
+  email: "director.snowwhiteschools@gmail.com",
+  sameAs: [
+    "https://www.facebook.com/share/1GvpggUdUU/",
+    "https://wa.me/265992686891",
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "https://schema.org/Monday",
+        "https://schema.org/Tuesday",
+        "https://schema.org/Wednesday",
+        "https://schema.org/Thursday",
+      ],
+      opens: "07:30",
+      closes: "14:30",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "https://schema.org/Friday",
+      opens: "07:30",
+      closes: "12:30",
+    },
+  ],
+};
+
 export const PUBLIC_ROUTES = [
   "/",
   "/about",

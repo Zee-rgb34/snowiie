@@ -23,8 +23,8 @@ function LegalPage({ title, intro, children }) {
 
           <div className="legal-page-footer">
             <p>
-              If you have questions about this policy or these terms, please contact the school through the
-              <Link to="/contact"> contact page</Link> or by phone on 0992 68 68 91.
+              If you have questions about this policy or these terms, please contact the school through the{" "}
+              <Link to="/contact">contact page</Link> or by phone on 099 268 6891.
             </p>
           </div>
         </div>
@@ -212,7 +212,7 @@ export function TermsAndConditionsPage() {
         <h2>9. Contact</h2>
         <p>
           If you have questions about these Terms and Conditions, or if you need more information about the website or school,
-          please contact the school through the contact page or by phone on 0992 68 68 91.
+          please contact the school through the contact page or by phone on 099 268 6891.
         </p>
       </div>
     </LegalPage>

@@ -4,6 +4,8 @@ import Icon from "../components/Icon.jsx";
 import ContactHero from "../components/ContactHero.jsx";
 import SeoMeta from "../components/SeoMeta.jsx";
 import { submitSchoolMessage } from "../lib/schoolSubmissions.js";
+import { SCHOOL_ORGANIZATION } from "../site.js";
+import { schoolSchedule } from "../data.js";
 import { getCanonicalUrl } from "../site.js";
 
 const contactTopics = [
@@ -89,8 +91,9 @@ export default function Contact() {
     <div className="contact-page">
       <SeoMeta
         title="Contact us"
-        description="Contact Snow White Private Schools in Naperi, Blantyre, Malawi for admissions enquiries, school information, and visits."
+        description="Contact Snow White Schools in Naperi, Blantyre, for admissions and school visits. Call 099 268 6891 or email director.snowwhiteschools@gmail.com."
         pathname="/contact"
+        imageAlt="Snow White Schools and its learning community in Malawi"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "ContactPage",
@@ -98,10 +101,17 @@ export default function Contact() {
           ...(getCanonicalUrl("/contact")
             ? { url: getCanonicalUrl("/contact") }
             : {}),
-          description: "Contact Snow White Private Schools in Naperi, Blantyre, Malawi for admissions enquiries, school information, and visits.",
+          description: "Contact Snow White Schools in Naperi, Blantyre, for admissions and school visits.",
           mainEntity: {
-            "@type": "EducationalOrganization",
-            name: "Snow White Private Schools",
+            "@type": "ContactPoint",
+            contactType: "school enquiries",
+            telephone: SCHOOL_ORGANIZATION.telephone,
+            email: SCHOOL_ORGANIZATION.email,
+            parentOrganization: {
+              "@type": "EducationalOrganization",
+              name: SCHOOL_ORGANIZATION.name,
+              address: SCHOOL_ORGANIZATION.address,
+            },
           },
         }}
       />
@@ -248,6 +258,31 @@ export default function Contact() {
         </div>
       </section>
 
+      <section
+        className="contact-schedule-section"
+        aria-labelledby="contact-schedule-title"
+        data-reveal="fade-up"
+      >
+        <div className="w contact-schedule-layout">
+          <div className="contact-schedule-heading">
+            <p className="contact-kicker">SCHOOL HOURS</p>
+            <h2 id="contact-schedule-title">Plan your school day.</h2>
+            <p>
+              Classes run Monday to Friday. Sports Day is held every Wednesday
+              afternoon.
+            </p>
+          </div>
+          <dl className="contact-schedule-list">
+            {schoolSchedule.map((item) => (
+              <div className="contact-schedule-row" key={item.days}>
+                <dt>{item.days}</dt>
+                <dd>{item.hours}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       <section className="contact-help-section" data-reveal="slide-left">
         <div className="w">
           <div className="contact-section-heading">
@@ -286,7 +321,7 @@ export default function Contact() {
               </div>
               <a className="contact-location-detail" href="tel:+265992686891">
                 <span className="contact-location-icon" aria-hidden="true"><Icon name="phone" /></span>
-                <p><strong>Phone</strong><span>+265 992 68 68 91</span></p>
+                <p><strong>Phone</strong><span>099 268 6891</span></p>
               </a>
               <a className="contact-location-detail" href="mailto:director.snowwhiteschools@gmail.com">
                 <span className="contact-location-icon" aria-hidden="true"><Icon name="mail" /></span>

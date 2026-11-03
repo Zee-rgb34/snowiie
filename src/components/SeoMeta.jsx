@@ -1,7 +1,14 @@
 import { useEffect } from "react";
-import { APP_NAME, getCanonicalUrl } from "../site.js";
+import {
+  APP_NAME,
+  getCanonicalUrl,
+  SCHOOL_ORGANIZATION,
+} from "../site.js";
 
-function ensureJsonLd(data) {
+const DEFAULT_DESCRIPTION =
+  "Discover Snow White Schools in Naperi, Blantyre: a caring learning community founded in 1995, with two campuses and strong Grade 7 results.";
+
+function ensureJsonLd(content) {
   let script = document.head.querySelector('script[data-ld="school"]');
 
   if (!script) {
@@ -11,7 +18,7 @@ function ensureJsonLd(data) {
     document.head.appendChild(script);
   }
 
-  script.textContent = JSON.stringify(data);
+  script.textContent = content;
 }
 
 export default function SeoMeta({
@@ -23,11 +30,27 @@ export default function SeoMeta({
   noIndex = false,
   canonical = true,
   jsonLd,
+  imageAlt = "Snow White Schools campus in Naperi, Blantyre, Malawi",
 }) {
+  const jsonLdOverride = jsonLd ? JSON.stringify(jsonLd) : "";
+
   useEffect(() => {
-    const pageTitle = title ? `${title} | ${APP_NAME}` : APP_NAME;
-    const metaDescription = description || "Snow White Private Schools in Naperi, Blantyre, Malawi, offering a caring learning environment and supportive school community.";
+    const pageTitle =
+      title === "Home"
+        ? `${APP_NAME} | Best Foundation for a Child`
+        : title
+          ? `${title} | ${APP_NAME}`
+          : APP_NAME;
+    const metaDescription = description || DEFAULT_DESCRIPTION;
     const canonicalUrl = canonical ? getCanonicalUrl(pathname) : "";
+    const pageUrl =
+      canonicalUrl ||
+      `${window.location.origin}${window.location.pathname}`;
+    const socialImageUrl = new URL(image || "/og-school.jpg", window.location.origin)
+      .href;
+    const organizationUrl =
+      canonicalUrl.split("/").slice(0, 3).join("/") ||
+      window.location.origin;
 
     document.title = pageTitle;
 
@@ -68,7 +91,13 @@ export default function SeoMeta({
     upsertMeta('meta[name="description"]', { name: "description", content: metaDescription });
     upsertMeta('meta[name="robots"]', {
       name: "robots",
-      content: noIndex ? "noindex, nofollow" : "index, follow",
+      content: noIndex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large",
+    });
+    upsertMeta('meta[name="author"]', {
+      name: "author",
+      content: "Snow White Private Schools",
     });
     upsertMeta('meta[property="og:title"]', {
       property: "og:title",
@@ -82,24 +111,49 @@ export default function SeoMeta({
       property: "og:type",
       content: type,
     });
+    upsertMeta('meta[property="og:site_name"]', {
+      property: "og:site_name",
+      content: APP_NAME,
+    });
+    upsertMeta('meta[property="og:locale"]', {
+      property: "og:locale",
+      content: "en_MW",
+    });
+    upsertMeta('meta[property="og:image"]', {
+      property: "og:image",
+      content: socialImageUrl,
+    });
+    upsertMeta('meta[property="og:image:secure_url"]', {
+      property: "og:image:secure_url",
+      content: socialImageUrl,
+    });
+    upsertMeta('meta[property="og:image:type"]', {
+      property: "og:image:type",
+      content: "image/jpeg",
+    });
+    upsertMeta('meta[property="og:image:width"]', {
+      property: "og:image:width",
+      content: "1200",
+    });
+    upsertMeta('meta[property="og:image:height"]', {
+      property: "og:image:height",
+      content: "630",
+    });
+    upsertMeta('meta[property="og:image:alt"]', {
+      property: "og:image:alt",
+      content: imageAlt,
+    });
+    upsertMeta('meta[property="og:url"]', {
+      property: "og:url",
+      content: pageUrl,
+    });
     if (canonicalUrl) {
-      upsertMeta('meta[property="og:url"]', {
-        property: "og:url",
-        content: canonicalUrl,
-      });
       upsertLink('link[rel="canonical"]', {
         rel: "canonical",
         href: canonicalUrl,
       });
     } else {
-      document.head.querySelector('meta[property="og:url"]')?.remove();
       document.head.querySelector('link[rel="canonical"]')?.remove();
-    }
-    if (image) {
-      upsertMeta('meta[property="og:image"]', {
-        property: "og:image",
-        content: image,
-      });
     }
     upsertMeta('meta[name="twitter:card"]', {
       name: "twitter:card",
@@ -113,34 +167,50 @@ export default function SeoMeta({
       name: "twitter:description",
       content: metaDescription,
     });
-    if (jsonLd) {
-      ensureJsonLd(jsonLd);
-    } else {
-      const schoolSchema = {
+    upsertMeta('meta[name="twitter:image"]', {
+      name: "twitter:image",
+      content: socialImageUrl,
+    });
+    upsertMeta('meta[name="twitter:image:alt"]', {
+      name: "twitter:image:alt",
+      content: imageAlt,
+    });
+
+    const schoolSchema = {
+      "@context": "https://schema.org",
+      ...SCHOOL_ORGANIZATION,
+      "@id": `${organizationUrl}/#school`,
+      url: organizationUrl,
+      description: DEFAULT_DESCRIPTION,
+    };
+    const structuredData =
+      jsonLdOverride ||
+      JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        name: APP_NAME,
-        ...(canonicalUrl ? { url: canonicalUrl.split("/").slice(0, 3).join("/") } : {}),
-        description: metaDescription,
-        areaServed: "Naperi, Blantyre, Malawi",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Naperi",
-          addressRegion: "Blantyre",
-          addressCountry: "MW",
-        },
-        contactPoint: [
+        "@graph": [
+          schoolSchema,
           {
-            "@type": "ContactPoint",
-            contactType: "enquiries",
-            telephone: "+265 992 68 68 91",
-            email: "director.snowwhiteschools@gmail.com",
+            "@type": "WebSite",
+            "@id": `${organizationUrl}/#website`,
+            name: APP_NAME,
+            url: organizationUrl,
+            inLanguage: "en-MW",
+            publisher: { "@id": `${organizationUrl}/#school` },
           },
         ],
-      };
-      ensureJsonLd(schoolSchema);
-    }
-  }, [canonical, description, image, jsonLd, noIndex, pathname, title, type]);
+      });
+    ensureJsonLd(structuredData);
+  }, [
+    canonical,
+    description,
+    image,
+    imageAlt,
+    jsonLdOverride,
+    noIndex,
+    pathname,
+    title,
+    type,
+  ]);
 
   return null;
 }

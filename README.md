@@ -25,8 +25,11 @@ the production host to serve `index.html` for application routes.
 ## Search indexing
 
 Set `VITE_SITE_ORIGIN` to the school's verified HTTPS production origin when
-building. The Vite build generates `sitemap.xml` and adds its URL to
-`robots.txt` only when this value is valid. Do not use a placeholder origin.
+building. The production build creates route-specific HTML pages with unique
+titles, descriptions, social preview metadata, and structured school
+information for search engines and link previews. It also generates
+`sitemap.xml` and adds its URL to `robots.txt` when the origin is valid. Do not
+use a placeholder origin.
 
 ## Forms and subscriptions
 

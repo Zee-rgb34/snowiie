@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import hero from "../assets/school-campus.jpg";
-import school from "../assets/student-achievements.jpg";
+import campusFront from "../assets/campus-front.jpg";
+import campusPrimary from "../assets/campus-primary-optimized.jpg";
 
-const slides = [hero, school];
+const slides = [campusFront, campusPrimary];
 
 function HeroLink({ to, className, children }) {
   if (to.startsWith("#")) {
@@ -32,6 +32,7 @@ export default function SchoolHero({
   secondaryTo,
   labelledBy,
   showCaption = true,
+  caption = "Learning today. Leading tomorrow.",
 }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -63,11 +64,17 @@ export default function SchoolHero({
             className={`home-hero-slide ${
               index === activeSlide ? "is-active" : ""
             }`}
-            style={{
-              backgroundImage: `url("${image}")`,
-              backgroundPosition: "center center",
-            }}
-          />
+          >
+            <img
+              src={image}
+              alt=""
+              width="1280"
+              height="960"
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchpriority={index === 0 ? "high" : "auto"}
+            />
+          </div>
         ))}
       </div>
 
@@ -101,7 +108,7 @@ export default function SchoolHero({
 
         {showCaption && (
           <div className="home-hero-caption">
-            <span>Learning today. Leading tomorrow.</span>
+            <span>{caption}</span>
           </div>
         )}
       </div>

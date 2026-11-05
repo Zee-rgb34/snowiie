@@ -91,7 +91,7 @@ export default function Contact() {
     <div className="contact-page">
       <SeoMeta
         title="Contact us"
-        description="Contact Snow White Schools in Naperi, Blantyre, for admissions and school visits. Call 099 268 6891 or email director.snowwhiteschools@gmail.com."
+        description="Contact Snow White Private Schools in Blantyre, Malawi, about admissions at our CI and Naperi campuses or to arrange a visit. Call 099 268 6891."
         pathname="/contact"
         imageAlt="Snow White Schools and its learning community in Malawi"
         jsonLd={{
@@ -108,9 +108,7 @@ export default function Contact() {
             telephone: SCHOOL_ORGANIZATION.telephone,
             email: SCHOOL_ORGANIZATION.email,
             parentOrganization: {
-              "@type": "EducationalOrganization",
-              name: SCHOOL_ORGANIZATION.name,
-              address: SCHOOL_ORGANIZATION.address,
+              "@id": `${getCanonicalUrl("/") || window.location.origin}/#school`,
             },
           },
         }}

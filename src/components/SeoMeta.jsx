@@ -6,7 +6,7 @@ import {
 } from "../site.js";
 
 const DEFAULT_DESCRIPTION =
-  "Discover Snow White Schools in Naperi, Blantyre: a caring learning community founded in 1995, with two campuses and strong Grade 7 results.";
+  "Discover Snow White Private Schools in Blantyre, Malawi. Founded in 1995, our CI and Naperi campuses offer a caring community and a strong foundation for every learner.";
 
 function ensureJsonLd(content) {
   let script = document.head.querySelector('script[data-ld="school"]');
@@ -32,12 +32,11 @@ export default function SeoMeta({
   jsonLd,
   imageAlt = "Snow White Schools campus in Naperi, Blantyre, Malawi",
 }) {
-  const jsonLdOverride = jsonLd ? JSON.stringify(jsonLd) : "";
 
   useEffect(() => {
     const pageTitle =
       title === "Home"
-        ? `${APP_NAME} | Best Foundation for a Child`
+        ? `${APP_NAME} | Blantyre, Malawi`
         : title
           ? `${title} | ${APP_NAME}`
           : APP_NAME;
@@ -183,29 +182,37 @@ export default function SeoMeta({
       url: organizationUrl,
       description: DEFAULT_DESCRIPTION,
     };
-    const structuredData =
-      jsonLdOverride ||
-      JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-          schoolSchema,
-          {
-            "@type": "WebSite",
-            "@id": `${organizationUrl}/#website`,
-            name: APP_NAME,
-            url: organizationUrl,
-            inLanguage: "en-MW",
-            publisher: { "@id": `${organizationUrl}/#school` },
-          },
-        ],
-      });
+    const websiteSchema = {
+      "@type": "WebSite",
+      "@id": `${organizationUrl}/#website`,
+      name: APP_NAME,
+      url: organizationUrl,
+      inLanguage: "en-MW",
+      publisher: { "@id": `${organizationUrl}/#school` },
+    };
+    const pageSchemas = jsonLd
+      ? (jsonLd["@graph"] || [jsonLd]).filter((schema) => {
+          const schemaTypes = Array.isArray(schema["@type"])
+            ? schema["@type"]
+            : [schema["@type"]];
+          return !schemaTypes.some((schemaType) =>
+            ["EducationalOrganization", "School", "WebSite"].includes(
+              schemaType
+            )
+          );
+        })
+      : [];
+    const structuredData = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [schoolSchema, websiteSchema, ...pageSchemas],
+    });
     ensureJsonLd(structuredData);
   }, [
     canonical,
     description,
     image,
     imageAlt,
-    jsonLdOverride,
+    jsonLd,
     noIndex,
     pathname,
     title,

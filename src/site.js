@@ -41,6 +41,21 @@ export const SCHOOL_ORGANIZATION = {
     addressRegion: "Blantyre",
     addressCountry: "MW",
   },
+  description:
+    "A caring school community in Blantyre, Malawi, with CI and Naperi campuses and a strong foundation for every learner.",
+  subOrganization: [
+    { "@type": "School", name: "Snow White Schools CI Campus" },
+    {
+      "@type": "School",
+      name: "Snow White Schools Naperi Campus",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Naperi",
+        addressRegion: "Blantyre",
+        addressCountry: "MW",
+      },
+    },
+  ],
   telephone: "+265992686891",
   email: "director.snowwhiteschools@gmail.com",
   sameAs: [

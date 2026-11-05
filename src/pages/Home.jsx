@@ -28,11 +28,11 @@ function SectionHeading({ children, description }) {
   );
 }
 
-function Reveal({ children, className = "", delay = 0 }) {
+function Reveal({ children, className = "", delay = 0, variant = "fade-up" }) {
   return (
     <div
       className={`home-reveal ${className}`.trim()}
-      data-reveal="fade-up"
+      data-reveal={variant}
       style={{ "--reveal-delay": `${delay}ms` }}
     >
       {children}
@@ -51,7 +51,7 @@ function WelcomeSection() {
       aria-labelledby="home-welcome-title"
     >
       <div className="w home-welcome-grid">
-        <Reveal className="home-welcome-image-wrap">
+        <Reveal className="home-welcome-image-wrap" variant="slide-left">
           <div className="home-image-frame">
             <img
               className="home-welcome-image"
@@ -65,7 +65,7 @@ function WelcomeSection() {
           </div>
         </Reveal>
 
-        <Reveal className="home-welcome-content" delay={120}>
+        <Reveal className="home-welcome-content" delay={120} variant="slide-right">
           <h2 id="home-welcome-title">
             A Place to Learn, <span>Grow and Belong</span>
           </h2>
@@ -120,6 +120,7 @@ function EnvironmentSection() {
               key={item.title}
               className="home-environment-reveal"
               delay={index * 100}
+              variant={["slide-left", "scale", "slide-right"][index]}
             >
               <article className="home-environment-card">
                 <div className="home-card-image-wrap">
@@ -178,6 +179,7 @@ function WhyChooseUsSection() {
               key={item.title}
               className="home-why-reveal"
               delay={index * 90}
+              variant={["slide-left", "fade-up", "scale", "fade-up", "slide-right"][index]}
             >
               <article className="home-why-item">
                 <div className="home-why-icon" aria-hidden="true">
@@ -243,7 +245,7 @@ function BeyondClassroomSection() {
     >
       <div className="w">
         <div className="home-beyond-layout">
-          <Reveal className="home-beyond-intro">
+          <Reveal className="home-beyond-intro" variant="slide-left">
             <h2 id="home-beyond-title">
               Helping Learners Discover Their <span>Potential.</span>
             </h2>
@@ -276,6 +278,7 @@ function BeyondClassroomSection() {
                 key={activity.title}
                 className="home-beyond-reveal"
                 delay={index * 100}
+                variant={index % 2 === 0 ? "slide-right" : "scale"}
               >
                 <article className="home-beyond-card">
                   <div className="home-beyond-card-copy">
@@ -308,7 +311,7 @@ function ParentsCommunitySection() {
       aria-labelledby="home-community-title"
     >
       <div className="w">
-        <Reveal className="home-community-panel">
+        <Reveal className="home-community-panel" variant="scale">
           <div className="home-community-content">
             <h2 id="home-community-title">
               Stronger Together: <span>Parents and School.</span>
@@ -370,49 +373,57 @@ function ParentsCommunitySection() {
    ========================================================= */
 
 function SchoolMomentsSection() {
-  const moments = [
+  const campuses = [
     {
       image: campusFront,
-      alt: "Snow White Schools campus entrance",
-      title: "Our School Campuses",
+      alt: "Entrance to a Snow White Schools campus",
+      title: "CI Campus",
+      text: "A welcoming place to learn, make friends and grow with the Snow White community.",
     },
     {
       image: campusPrimary,
-      alt: "Snow White Schools primary campus grounds",
-      title: "Room to Learn and Grow",
-    },
-    {
-      image: schoolCommunity,
-      alt: "Snow White learners and staff gathered as a school community",
-      title: "Our School Community",
+      alt: "Learning spaces and grounds at a Snow White Schools campus",
+      title: "Naperi Campus",
+      text: "A close-knit school community where learners are encouraged to take part, discover their strengths and thrive.",
     },
   ];
 
   return (
     <section
-      className="home-moments-section"
-      aria-labelledby="home-moments-title"
+      className="home-campuses-section"
+      aria-labelledby="home-campuses-title"
     >
       <div className="w">
-        <div className="home-moments-heading">
-          <h2 id="home-moments-title">Life at <span>Snow White.</span></h2>
-          <p>Explore our campuses and the community where Snow White learners grow.</p>
+        <div className="home-campuses-heading">
+          <div>
+            <span className="home-campuses-eyebrow">ONE SCHOOL COMMUNITY</span>
+            <h2 id="home-campuses-title">Our <span>Campuses.</span></h2>
+          </div>
+          <p>Two welcoming places to learn, grow and build a bright future together.</p>
         </div>
 
-        <div className="home-moments-grid">
-          {moments.map((moment, index) => (
-            <Reveal className="home-moment-reveal" delay={index * 90} key={moment.title}>
-              <figure className="home-moment">
+        <div className="home-campuses-grid">
+          {campuses.map((campus, index) => (
+            <Reveal
+              className="home-campus-reveal"
+              delay={index * 100}
+              key={campus.title}
+              variant={index === 0 ? "slide-left" : "slide-right"}
+            >
+              <article className="home-campus">
                 <img
-                  src={moment.image}
-                  alt={moment.alt}
+                  src={campus.image}
+                  alt={campus.alt}
                   width="1100"
                   height="825"
                   loading="lazy"
                   decoding="async"
                 />
-                <figcaption>{moment.title}</figcaption>
-              </figure>
+                <div className="home-campus-copy">
+                  <h3>{campus.title}</h3>
+                  <p>{campus.text}</p>
+                </div>
+              </article>
             </Reveal>
           ))}
         </div>
@@ -533,7 +544,7 @@ export default function Home() {
     <>
       <SeoMeta
         title="Home"
-        description="Founded in 1995, Snow White Schools in Naperi, Blantyre supports 200+ learners across two campuses and has kept a 100% Grade 7 pass rate since 2010."
+        description="Discover Snow White Private Schools in Blantyre, Malawi. Founded in 1995, our CI and Naperi campuses offer a caring community and a strong foundation for every learner."
         imageAlt="Snow White Schools campus in Naperi, Blantyre"
         pathname="/"
         jsonLd={{
@@ -543,7 +554,7 @@ export default function Home() {
               "@type": "WebSite",
               name: "Snow White Private Schools",
               ...(canonicalHomeUrl ? { url: canonicalHomeUrl } : {}),
-              description: "The official website of Snow White Schools in Naperi, Blantyre, Malawi.",
+              description: "The official website of Snow White Private Schools in Blantyre, Malawi, with CI and Naperi campuses.",
               inLanguage: "en-MW",
               publisher: schoolId
                 ? { "@id": schoolId }
@@ -556,7 +567,7 @@ export default function Home() {
               ...SCHOOL_ORGANIZATION,
               ...(schoolId ? { "@id": schoolId } : {}),
               ...(canonicalHomeUrl ? { url: canonicalHomeUrl } : {}),
-              description: "A school community founded in 1995, with two campuses and a 100% Grade 7 pass rate maintained since 2010.",
+              description: "A school community founded in 1995, with CI and Naperi campuses and a 100% Grade 7 pass rate maintained since 2010.",
             },
           ],
         }}

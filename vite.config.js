@@ -13,19 +13,19 @@ const publicRoutes = [
 
 const pageMetadata = {
   "/": {
-    title: "Snow White Private Schools | Best Foundation for a Child",
+    title: "Snow White Private Schools | Blantyre, Malawi",
     description:
-      "Founded in 1995, Snow White Schools in Naperi, Blantyre supports 200+ learners across two campuses and has kept a 100% Grade 7 pass rate since 2010.",
+      "Discover Snow White Private Schools in Blantyre, Malawi. Founded in 1995, our CI and Naperi campuses offer a caring community and a strong foundation for every learner.",
   },
   "/about": {
     title: "About us | Snow White Private Schools",
     description:
-      "Founded in 1995 by Lilian Banda, Snow White Schools serves 200+ students across two campuses and has a 100% Grade 7 pass rate since 2010.",
+      "Learn about Snow White Private Schools, founded by Lilian Banda in 1995. Meet our directors, explore CI and Naperi campuses, and see how our learners grow.",
   },
   "/contact": {
     title: "Contact us | Snow White Private Schools",
     description:
-      "Contact Snow White Schools in Naperi, Blantyre, for admissions and school visits. Call 099 268 6891 or email director.snowwhiteschools@gmail.com.",
+      "Contact Snow White Private Schools in Blantyre, Malawi, about admissions at our CI and Naperi campuses or to arrange a visit. Call 099 268 6891.",
   },
   "/privacy-policy": {
     title: "Privacy Policy | Snow White Private Schools",
@@ -90,6 +90,21 @@ function createRouteHtml(template, route, siteOrigin) {
       addressRegion: "Blantyre",
       addressCountry: "MW",
     },
+    description:
+      "A caring school community in Blantyre, Malawi, with CI and Naperi campuses and a strong foundation for every learner.",
+    subOrganization: [
+      { "@type": "School", name: "Snow White Schools CI Campus" },
+      {
+        "@type": "School",
+        name: "Snow White Schools Naperi Campus",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Naperi",
+          addressRegion: "Blantyre",
+          addressCountry: "MW",
+        },
+      },
+    ],
     telephone: "+265992686891",
     email: "director.snowwhiteschools@gmail.com",
     sameAs: [

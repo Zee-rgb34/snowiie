@@ -12,7 +12,8 @@ import {
   schoolDirectors,
   values,
 } from "../data.js";
-import { getCanonicalUrl, SCHOOL_ORGANIZATION } from "../site.js";
+import { directorImages } from "../directorImages.js";
+import { getCanonicalUrl } from "../site.js";
 
 import hero from "../assets/campus-front.jpg";
 import studentActivities from "../assets/campus-grade-school-optimized.jpg";
@@ -33,7 +34,7 @@ export default function About() {
     <div className="about-page">
       <SeoMeta
         title="About us"
-        description="Founded in 1995 by Lilian Banda, Snow White Schools serves 200+ students across two campuses and has a 100% Grade 7 pass rate since 2010."
+        description="Learn about Snow White Private Schools, founded by Lilian Banda in 1995. Meet our directors, explore CI and Naperi campuses, and see how our learners grow."
         pathname="/about"
         imageAlt="Snow White Schools campus in Naperi, Blantyre"
         jsonLd={{
@@ -43,7 +44,9 @@ export default function About() {
           ...(getCanonicalUrl("/about")
             ? { url: getCanonicalUrl("/about") }
             : {}),
-          mainEntity: SCHOOL_ORGANIZATION,
+          mainEntity: {
+            "@id": `${getCanonicalUrl("/") || window.location.origin}/#school`,
+          },
         }}
       />
       <SchoolHero
@@ -100,7 +103,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-five-keys" aria-labelledby="about-five-keys-title" data-reveal="fade-up">
+      <section className="about-five-keys" aria-labelledby="about-five-keys-title" data-reveal="slide-right">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">THE FIVE KEYS</span>
@@ -173,7 +176,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-community" data-reveal="fade-up">
+      <section className="about-community" data-reveal="scale">
         <div className="w about-community-inner">
           <div>
             <span className="about-eyebrow">OUR SCHOOL COMMUNITY</span>
@@ -194,7 +197,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-programmes" aria-labelledby="about-programmes-title" data-reveal="fade-up">
+      <section className="about-programmes" aria-labelledby="about-programmes-title" data-reveal="slide-right">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">SCHOOL PROGRAMMES AND ACTIVITIES</span>
@@ -204,18 +207,29 @@ export default function About() {
           <div className="about-programmes-grid">
             {schoolActivities.map((activity) => (
               <article className="about-programme" key={activity.title}>
-                <span className="home-card-icon" aria-hidden="true">
-                  <Icon name={activity.icon} />
-                </span>
-                <h3>{activity.title}</h3>
-                <p>{activity.text}</p>
+                {activity.image && (
+                  <img
+                    className="about-programme-image"
+                    src={activity.image}
+                    alt={`${activity.title} at Snow White Schools`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div className="about-programme-content">
+                  <span className="home-card-icon" aria-hidden="true">
+                    <Icon name={activity.icon} />
+                  </span>
+                  <h3>{activity.title}</h3>
+                  <p>{activity.text}</p>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="about-directors" aria-labelledby="about-directors-title" data-reveal="fade-up">
+      <section className="about-directors" aria-labelledby="about-directors-title" data-reveal="slide-left">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">SCHOOL MANAGEMENT</span>
@@ -226,6 +240,14 @@ export default function About() {
               <article className="about-director" key={director.name}>
                 <span className="about-director-initials" aria-hidden="true">{director.initials}</span>
                 <div>
+                  <img
+                    src={directorImages[director.initials]}
+                    alt={director.name + " portrait"}
+                    className="about-director-image"
+                    width="120"
+                    height="120"
+                    style={{ borderRadius: "50%", objectFit: "cover", marginBottom: 8 }}
+                  />
                   <h3>{director.name}</h3>
                   <p>{director.role}</p>
                 </div>

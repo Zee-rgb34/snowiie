@@ -1,6 +1,14 @@
 import classroom from "./assets/classroom-learning-optimized.jpg";
 import sports from "./assets/sports-day-optimized.jpg";
 import community from "./assets/student-activities-optimized.jpg";
+import spellingBee from "../images/spelling bee.jpeg";
+import educationalTrip from "../images/park.jpeg";
+import culturalDay from "../images/FB_IMG_1791890023063.jpg.jpeg";
+import sportsDay from "../images/sports.jpeg";
+import graduation from "../images/grad (1).jpeg";
+import yearEndCelebration from "../images/xmas.jpeg";
+import careerDay from "../images/FB_IMG_1791889724638.jpg.jpeg";
+
 export const environment = [
   { img: classroom, width: 1100, height: 825, icon: "book", title: "Learning and Classrooms", text: "Modern classrooms that inspire curiosity and critical thinking." },
   { img: sports, width: 1000, height: 750, icon: "user", title: "Student Development", text: "We support talents, build confidence and encourage personal growth." },
@@ -30,13 +38,13 @@ export const fiveKeys = [
 ];
 
 export const schoolActivities = [
-  { icon: "book", title: "Spelling Bee", text: "A programme that builds spelling, grammar and language skills." },
-  { icon: "map-pin", title: "Educational Trips", text: "Third-term trips give preschool learners visits to Chilato and other fun places, while senior learners explore game reserves, colleges and universities." },
-  { icon: "trending-up", title: "Career Day", text: "Held in the second term for all classes, introducing learners to careers and future opportunities." },
-  { icon: "users", title: "Cultural Day", text: "Learners celebrate local and international cultures and build cultural appreciation." },
-  { icon: "star", title: "Sports Day", text: "Every Wednesday from 1:00 p.m. to 2:30 p.m. Campuses sometimes compete, and the school takes part in inter-school events. Snow White has beaten Baptist and Southend in football and netball." },
-  { icon: "cap", title: "Graduation and Awards", text: "Annual Reception and Grade 7 graduations are combined with awards for all classes. Alumni are invited to share speeches and inspire learners." },
-  { icon: "heart", title: "Year-end Celebrations", text: "Farewell parties and Christmas celebrations take place in December. Teachers also enjoy end-of-year team-building, including trips to the lake." },
+  { icon: "book", title: "Spelling Bee", text: "A programme that builds spelling, grammar and language skills.", image: spellingBee },
+  { icon: "map-pin", title: "Educational Trips", text: "Third-term trips give preschool learners visits to Chilato and other fun places, while senior learners explore game reserves, colleges and universities.", image: educationalTrip },
+  { icon: "trending-up", title: "Career Day", text: "Held in the second term for all classes, introducing learners to careers and future opportunities.", image: careerDay },
+  { icon: "users", title: "Cultural Day", text: "Learners celebrate local and international cultures and build cultural appreciation.", image: culturalDay },
+  { icon: "star", title: "Sports Day", text: "Every Wednesday from 1:00 p.m. to 2:30 p.m. Campuses sometimes compete, and the school takes part in inter-school events. Snow White has beaten Baptist and Southend in football and netball.", image: sportsDay },
+  { icon: "cap", title: "Graduation and Awards", text: "Annual Reception and Grade 7 graduations are combined with awards for all classes. Alumni are invited to share speeches and inspire learners.", image: graduation },
+  { icon: "heart", title: "Year-end Celebrations", text: "Farewell parties and Christmas celebrations take place in December. Teachers also enjoy end-of-year team-building, including trips to the lake.", image: yearEndCelebration },
 ];
 
 export const schoolSchedule = [
@@ -49,4 +57,3 @@ export const schoolDirectors = [
   { initials: "RB", name: "Rachel Banda", role: "Director" },
   { initials: "PB", name: "Prosper Banda", role: "Director" },
 ];
-

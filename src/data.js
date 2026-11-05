@@ -1,4 +1,4 @@
-import classroom from "./assets/classroom-learning-optimized.jpg";
+import classroom from "./assets/zero.png";
 import sports from "./assets/sports-day-optimized.jpg";
 import community from "./assets/student-activities-optimized.jpg";
 import spellingBee from "../images/spelling bee.jpeg";

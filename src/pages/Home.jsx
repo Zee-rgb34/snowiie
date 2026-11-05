@@ -10,7 +10,7 @@ import { environment, why } from "../data.js";
 import { getCanonicalUrl, SCHOOL_ORGANIZATION } from "../site.js";
 
 import schoolCommunity from "../assets/school-community-optimized.jpg";
-import classroom from "../assets/classroom-learning-optimized.jpg";
+import classroom from "../assets/zero.png";
 import sportsDay from "../assets/sports-day-optimized.jpg";
 import campusFront from "../assets/campus-front.jpg";
 import campusPrimary from "../assets/campus-primary-optimized.jpg";
@@ -377,13 +377,13 @@ function SchoolMomentsSection() {
     {
       image: campusFront,
       alt: "Entrance to a Snow White Schools campus",
-      title: "CI Campus",
+      title: "Naperi Campus",
       text: "A welcoming place to learn, make friends and grow with the Snow White community.",
     },
     {
       image: campusPrimary,
       alt: "Learning spaces and grounds at a Snow White Schools campus",
-      title: "Naperi Campus",
+      title: "CI Campus",
       text: "A close-knit school community where learners are encouraged to take part, discover their strengths and thrive.",
     },
   ];

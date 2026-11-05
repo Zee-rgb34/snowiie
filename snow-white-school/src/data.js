@@ -1,4 +1,4 @@
-import classroom from "./assets/classroom.jpg";
+import classroom from "./assets/zero.png";
 import sports from "./assets/sports.jpg";
 import community from "./assets/community.jpg";
 

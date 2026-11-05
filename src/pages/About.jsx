@@ -15,7 +15,7 @@ import {
 import { directorImages } from "../directorImages.js";
 import { getCanonicalUrl } from "../site.js";
 
-import hero from "../assets/campus-front.jpg";
+import hero from "../assets/zero.png";
 import studentActivities from "../assets/campus-grade-school-optimized.jpg";
 
 /* =========================================================

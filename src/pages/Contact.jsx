@@ -116,9 +116,9 @@ export default function Contact() {
 
       <ContactHero description="Talk with our team about admissions, a school visit, or any questions you have about Snow White Private Schools." />
 
-      <section id="contact-enquiry" className="contact-main-section" aria-label="Send an enquiry" data-reveal="slide-right">
+      <section id="contact-enquiry" className="contact-main-section" aria-label="Send an enquiry" data-reveal="fade-up">
         <div className="w contact-main-grid">
-          <div className="contact-aside">
+          <div className="contact-aside" data-reveal="slide-left">
             <h2>How can we help?</h2>
             <p>Choose a topic in the form and include the details that will help us guide you.</p>
 
@@ -142,7 +142,7 @@ export default function Contact() {
             </Link>
           </div>
 
-          <div className="contact-form-panel">
+          <div className="contact-form-panel" data-reveal="scale" style={{ "--reveal-delay": "120ms" }}>
             <div className="contact-form-heading">
               <h2>Send an enquiry</h2>
               <p>Fields marked required help us understand your request.</p>
@@ -262,7 +262,7 @@ export default function Contact() {
         data-reveal="fade-up"
       >
         <div className="w contact-schedule-layout">
-          <div className="contact-schedule-heading">
+          <div className="contact-schedule-heading" data-reveal="slide-left">
             <p className="contact-kicker">SCHOOL HOURS</p>
             <h2 id="contact-schedule-title">Plan your school day.</h2>
             <p>
@@ -271,8 +271,13 @@ export default function Contact() {
             </p>
           </div>
           <dl className="contact-schedule-list">
-            {schoolSchedule.map((item) => (
-              <div className="contact-schedule-row" key={item.days}>
+            {schoolSchedule.map((item, index) => (
+              <div
+                className="contact-schedule-row"
+                data-reveal="slide-right"
+                style={{ "--reveal-delay": `${index * 70}ms` }}
+                key={item.days}
+              >
                 <dt>{item.days}</dt>
                 <dd>{item.hours}</dd>
               </div>
@@ -289,8 +294,13 @@ export default function Contact() {
           </div>
 
           <div className="contact-help-grid">
-            {contactTopics.map((topic) => (
-              <article className="contact-help-card" key={topic.title}>
+            {contactTopics.map((topic, index) => (
+              <article
+                className="contact-help-card"
+                data-reveal={index % 2 === 0 ? "scale" : "fade-up"}
+                style={{ "--reveal-delay": `${index * 75}ms` }}
+                key={topic.title}
+              >
                 <span className="contact-help-icon" aria-hidden="true">
                   <Icon name={topic.icon} />
                 </span>
@@ -304,7 +314,7 @@ export default function Contact() {
 
       <section id="visit-school" className="contact-location-section" aria-labelledby="contact-location-title" data-reveal="slide-right">
         <div className="w contact-location-layout">
-          <div className="contact-location-copy">
+          <div className="contact-location-copy" data-reveal="slide-left">
             <p className="contact-kicker">VISIT US</p>
             <h2 id="contact-location-title">Find us in Naperi.</h2>
             <p>
@@ -338,7 +348,7 @@ export default function Contact() {
             </a>
           </div>
 
-          <div className="contact-map-panel" aria-label="Map to Snow White Private Schools">
+          <div className="contact-map-panel" aria-label="Map to Snow White Private Schools" data-reveal="scale" style={{ "--reveal-delay": "120ms" }}>
             <iframe
               title="Map showing the location of Snow White Private Schools in Naperi, Blantyre, Malawi"
               src="https://www.google.com/maps?q=Naperi%20Blantyre%20Malawi&z=13&output=embed"
@@ -351,7 +361,7 @@ export default function Contact() {
 
       <section className="contact-faq-section" data-reveal="fade-up">
         <div className="w contact-faq-layout">
-          <div className="contact-faq-heading">
+          <div className="contact-faq-heading" data-reveal="slide-left">
             <p className="contact-kicker">A FEW QUICK ANSWERS</p>
             <h2>Frequently asked questions</h2>
             <p>Still unsure? Send us your question and we'll point you in the right direction.</p>
@@ -362,8 +372,13 @@ export default function Contact() {
           </div>
 
           <div className="contact-faq-list">
-            {contactFaqs.map((faq) => (
-              <details className="contact-faq-item" key={faq.question}>
+            {contactFaqs.map((faq, index) => (
+              <details
+                className="contact-faq-item"
+                data-reveal="fade-up"
+                style={{ "--reveal-delay": `${index * 80}ms` }}
+                key={faq.question}
+              >
                 <summary>{faq.question}<span aria-hidden="true">+</span></summary>
                 <p>{faq.answer}</p>
               </details>

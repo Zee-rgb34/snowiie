@@ -103,7 +103,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-five-keys" aria-labelledby="about-five-keys-title" data-reveal="slide-right">
+      <section className="about-five-keys" aria-labelledby="about-five-keys-title" data-reveal="slide-left">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">THE FIVE KEYS</span>
@@ -176,7 +176,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-community" data-reveal="scale">
+      <section className="about-community" data-reveal="fade-up">
         <div className="w about-community-inner">
           <div>
             <span className="about-eyebrow">OUR SCHOOL COMMUNITY</span>
@@ -197,7 +197,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-programmes" aria-labelledby="about-programmes-title" data-reveal="slide-right">
+      <section className="about-programmes" aria-labelledby="about-programmes-title" data-reveal="scale">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">SCHOOL PROGRAMMES AND ACTIVITIES</span>
@@ -205,8 +205,13 @@ export default function About() {
             <p>Academic, cultural and sporting experiences help learners build skills, confidence and community.</p>
           </div>
           <div className="about-programmes-grid">
-            {schoolActivities.map((activity) => (
-              <article className="about-programme" key={activity.title}>
+            {schoolActivities.map((activity, index) => (
+              <article
+                className="about-programme"
+                data-reveal={["slide-left", "fade-up", "slide-right"][index % 3]}
+                style={{ "--reveal-delay": `${index * 70}ms` }}
+                key={activity.title}
+              >
                 {activity.image && (
                   <img
                     className="about-programme-image"
@@ -229,16 +234,20 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-directors" aria-labelledby="about-directors-title" data-reveal="slide-left">
+      <section className="about-directors" aria-labelledby="about-directors-title" data-reveal="slide-right">
         <div className="w">
           <div className="about-extra-heading">
             <span className="about-eyebrow">SCHOOL MANAGEMENT</span>
             <h2 id="about-directors-title">Meet our directors.</h2>
           </div>
           <div className="about-directors-grid">
-            {schoolDirectors.map((director) => (
-              <article className="about-director" key={director.name}>
-                <span className="about-director-initials" aria-hidden="true">{director.initials}</span>
+            {schoolDirectors.map((director, index) => (
+              <article
+                className="about-director"
+                data-reveal="scale"
+                style={{ "--reveal-delay": `${index * 130}ms` }}
+                key={director.name}
+              >
                 <div>
                   <img
                     src={directorImages[director.initials]}
@@ -246,7 +255,6 @@ export default function About() {
                     className="about-director-image"
                     width="120"
                     height="120"
-                    style={{ borderRadius: "50%", objectFit: "cover", marginBottom: 8 }}
                   />
                   <h3>{director.name}</h3>
                   <p>{director.role}</p>
@@ -257,7 +265,7 @@ export default function About() {
         </div>
       </section>
       {/* LIFE AT SCHOOL */}
-      <section className="about-life" data-reveal="scale">
+      <section className="about-life" data-reveal="fade-up">
         <div className="w">
           <div className="about-life-heading">
             <div>
@@ -287,9 +295,11 @@ export default function About() {
                   height="825"
                   loading="lazy"
                   decoding="async"
+                  data-reveal="scale"
+                  style={{ "--reveal-delay": `${index * 110}ms` }}
                 />
 
-                <figcaption>
+                <figcaption data-reveal="fade-up" style={{ "--reveal-delay": `${index * 110 + 70}ms` }}>
                   <span>{item.title}</span>
                 </figcaption>
               </figure>

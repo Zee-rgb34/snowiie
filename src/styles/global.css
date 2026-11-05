@@ -4992,7 +4992,7 @@ form > p {
 }
 
 .about-page .about-life-item figcaption span:last-child {
-  color: #fff;
+  color: var(--about-text);
   font-size: 17px;
   transition: transform 0.25s ease;
 }
@@ -5480,7 +5480,7 @@ form > p {
   min-height: 0;
   padding: 15px 18px;
   background: #ffffff;
-  color: var(--about-dark);
+  color: var(--about-text);
   font-size: 14px;
   font-weight: 650;
 }
@@ -8281,11 +8281,21 @@ a.contact-location-detail:hover {
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: 16px;
+  flex-direction: column;
   padding: 22px;
   border: 1px solid var(--about-border);
   border-radius: 6px;
   background: var(--about-light);
+  text-align: center;
+}
+
+.about-page .about-director-image {
+  width: 136px;
+  height: 136px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .about-page .about-director-initials {

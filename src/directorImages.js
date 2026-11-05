@@ -1,5 +1,5 @@
-import rachelBandaImage from "../images/FB_IMG_1791889703078.jpg.jpeg";
-import prosperBandaImage from "../images/FB_IMG_1791889710756.jpg.jpeg";
+import rachelBandaImage from "../snow-white-school/src/assets/DIRECTOR2.jpeg";
+import prosperBandaImage from "../snow-white-school/src/assets/DIRECTOR 1.jpeg";
 
 export const directorImages = {
   RB: rachelBandaImage,

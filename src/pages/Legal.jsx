@@ -73,7 +73,7 @@ export function PrivacyPolicyPage() {
         <h2>4. Storage, security and retention</h2>
         <p>
           Website form submissions, published testimonials, and email subscriptions are processed using Supabase. Enquiry
-          notifications are delivered using Resend. A one-way hash of the connection address may be used to limit repeated
+          notifications are delivered using EmailJS. A one-way hash of the connection address may be used to limit repeated
           form submissions and is removed within one day. The school retains enquiry emails according to its operational
           and legal record-keeping needs. Testimonials remain public until removal is requested or the school removes them.
           Subscription details are retained until you unsubscribe or request removal. Service providers may process
@@ -94,7 +94,7 @@ export function PrivacyPolicyPage() {
       <div className="legal-page-block">
         <h2>6. Cookies, analytics and third-party services</h2>
         <p>
-          The website does not currently use an analytics service. The embedded Google map and the Supabase and Resend
+          The website does not currently use an analytics service. The embedded Google map and the Supabase and EmailJS
           services may receive technical information when they are used. These providers operate under their own privacy
           practices. External social media links are governed by the relevant platform's terms and privacy information.
         </p>
@@ -104,7 +104,7 @@ export function PrivacyPolicyPage() {
         <h2>7. Data sharing</h2>
         <p>
           We do not sell personal information. Form information and subscription details are processed by Supabase to
-          handle submissions and by Resend to deliver email notifications. Testimonials are made available publicly on
+          handle submissions and by EmailJS to deliver email notifications. Testimonials are made available publicly on
           the website after submission and consent. Please consult those providers' privacy notices for details about
           their own processing.
         </p>

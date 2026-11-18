@@ -92,24 +92,30 @@ async function readJsonBody(request: Request) {
 }
 
 async function sendEmail(subject: string, text: string) {
-  const apiKey = Deno.env.get("RESEND_API_KEY");
-  const sender = Deno.env.get("SENDER_EMAIL");
+  const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
+  const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
+  const publicKey = Deno.env.get("EMAILJS_PUBLIC_KEY");
+  const privateKey = Deno.env.get("EMAILJS_PRIVATE_KEY");
 
-  if (!apiKey || !sender) {
+  if (!serviceId || !templateId || !publicKey || !privateKey) {
     throw new Error("Email delivery is not configured.");
   }
 
-  const response = await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: sender,
-      to: [inbox],
-      subject,
-      text,
+      service_id: serviceId,
+      template_id: templateId,
+      user_id: publicKey,
+      accessToken: privateKey,
+      template_params: {
+        subject,
+        message: text,
+        to_email: inbox,
+      },
     }),
   });
 
@@ -366,7 +372,7 @@ Deno.serve(async (request) => {
           method: "POST",
           headers: {
             apikey: serviceRoleKey,
-            Authorization: `******
+            Authorization: `Bearer ${serviceRoleKey}`,
             "Content-Type": "application/json",
             Prefer: "resolution=ignore-duplicates,return=minimal",
           },

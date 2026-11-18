@@ -44,15 +44,15 @@ an email campaign sender and self-service unsubscribe link are not included.
 2. Apply the SQL migrations with the Supabase CLI:
    `supabase db push`.
 3. Set the Edge Function secrets `ALLOWED_ORIGIN`, `SUPABASE_URL`,
-   `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, and `SENDER_EMAIL`. Set
-   `ALLOWED_ORIGIN` to the exact HTTPS website origin, without a path. Local
-   development can use an explicit `http://localhost:5173` origin.
+   `SUPABASE_SERVICE_ROLE_KEY`, `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`,
+   `EMAILJS_PUBLIC_KEY`, and `EMAILJS_PRIVATE_KEY`. Set `ALLOWED_ORIGIN` to the
+   exact HTTPS website origin, without a path. Local development can use an
+   explicit `http://localhost:5173` origin.
 4. Deploy the function with:
    `supabase functions deploy submit-school-message`.
-5. Verify the sender domain with Resend before relying on email delivery.
 
-Never put the service-role key, Resend API key, or sender credentials in a
-`VITE_` variable or browser code. The function validates inputs, limits request
+Never put the service-role key or EmailJS private key in a `VITE_` variable or
+browser code. The function validates inputs, limits request
 body size and repeated submissions, checks the configured browser origin, and
 keeps subscriber data inaccessible to anonymous database clients.
 

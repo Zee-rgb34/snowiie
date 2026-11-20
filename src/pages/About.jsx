@@ -6,7 +6,6 @@ import CallToAction from "../components/CallToAction.jsx";
 import SeoMeta from "../components/SeoMeta.jsx";
 import SchoolHero from "../components/SchoolHero.jsx";
 import {
-  environment,
   fiveKeys,
   schoolActivities,
   schoolDirectors,
@@ -17,13 +16,32 @@ import { getCanonicalUrl } from "../site.js";
 
 import hero from "../assets/zero.png";
 import studentActivities from "../assets/campus-grade-school-optimized.jpg";
+import schoolBus from "../../new images/school busses.jpeg";
+import preschool from "../../new images/pre school.jpeg";
+import charity from "../../new images/charity.jpeg";
+import charityTwo from "../../new images/charity2.jpeg";
+import charityThree from "../../new images/charity 3.jpeg";
+import charityFour from "../../new images/charity 4.jpeg";
+import soilActivity from "../../new images/soil.jpeg";
+import culturalDayGallery from "../../new images/cultural day 5.jpeg";
+import graduationGallery from "../../new images/graduation 2.jpeg";
+import christmasGallery from "../../new images/father xmass 3.jpeg";
+import playground from "../../images/FB_IMG_1791889816092.jpg.jpeg";
+import outdoorLearners from "../../images/FB_IMG_1791890154054.jpg.jpeg";
 
 /* =========================================================
    ABOUT PAGE
    ========================================================= */
 
 export default function About() {
-  const gallery = environment.slice(0, 3);
+  const lifeGallery = [
+    { img: culturalDayGallery, title: "Cultural Day" },
+    { img: graduationGallery, title: "Graduation and awards" },
+    { img: christmasGallery, title: "Christmas celebrations" },
+    { img: soilActivity, title: "Hands-on learning" },
+    { img: playground, title: "Playground activities" },
+    { img: outdoorLearners, title: "Learners together outdoors" },
+  ];
   const stats = [
     { value: "100%", label: "Grade 7 pass rate since 2010" },
     { value: "80%", label: "Grade 7 selection rate" },
@@ -76,15 +94,26 @@ export default function About() {
             </p>
           </div>
 
-          <img
-            className="about-introduction-image"
-            src={hero}
-            alt="Entrance and school buildings at Snow White Schools"
-            width="1280"
-            height="960"
-            loading="eager"
-            decoding="async"
-          />
+          <div className="about-introduction-media">
+            <img
+              className="about-introduction-image"
+              src={hero}
+              alt="Entrance and school buildings at Snow White Schools"
+              width="1280"
+              height="960"
+              loading="eager"
+              decoding="async"
+            />
+            <img
+              className="about-introduction-bus"
+              src={schoolBus}
+              alt="Snow White Schools school buses"
+              width="1280"
+              height="960"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </section>
 
@@ -197,6 +226,55 @@ export default function About() {
         </div>
       </section>
 
+      <section className="about-preschool" aria-labelledby="about-preschool-title" data-reveal="slide-left">
+        <div className="w about-preschool-layout">
+          <div className="about-preschool-copy">
+            <span className="about-eyebrow">EARLY LEARNING</span>
+            <h2 id="about-preschool-title">
+              A joyful start in <span>Preschool.</span>
+            </h2>
+            <p>
+              Snow White began as a preschool in 1995. Today, our youngest
+              learners discover school through play, creativity, practical
+              activities and caring support.
+            </p>
+          </div>
+          <img
+            src={preschool}
+            alt="Preschool learners taking part in a classroom activity"
+            width="1280"
+            height="960"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section className="about-charity" aria-labelledby="about-charity-title" data-reveal="fade-up">
+        <div className="w">
+          <div className="about-extra-heading">
+            <span className="about-eyebrow">CHARITY WORK</span>
+            <h2 id="about-charity-title">Serving others with kindness.</h2>
+            <p>
+              Community service is part of life at Snow White Schools. Our
+              learners and staff take part in practical giving and outreach.
+            </p>
+          </div>
+          <div className="about-charity-gallery">
+            {[charity, charityTwo, charityThree, charityFour].map((image, index) => (
+              <figure key={image} data-reveal="scale" style={{ "--reveal-delay": `${index * 90}ms` }}>
+                <img
+                  src={image}
+                  alt={`Snow White Schools charity work ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="about-programmes" aria-labelledby="about-programmes-title" data-reveal="scale">
         <div className="w">
           <div className="about-extra-heading">
@@ -283,7 +361,7 @@ export default function About() {
           </div>
 
           <div className="about-life-gallery">
-            {gallery.map((item, index) => (
+            {lifeGallery.map((item, index) => (
               <figure
                 className={`about-life-item about-life-item-${index + 1}`}
                 key={item.title}

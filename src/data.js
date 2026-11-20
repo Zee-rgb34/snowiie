@@ -1,13 +1,13 @@
 import classroom from "./assets/zero.png";
 import sports from "./assets/sports-day-optimized.jpg";
 import community from "./assets/student-activities-optimized.jpg";
-import spellingBee from "../images/spelling bee.jpeg";
+import spellingBee from "../new images/spelling bee.jpeg";
 import educationalTrip from "../images/park.jpeg";
-import culturalDay from "../images/FB_IMG_1791890023063.jpg.jpeg";
+import culturalDay from "../new images/cultural day 3.jpeg";
 import sportsDay from "../images/sports.jpeg";
-import graduation from "../images/grad (1).jpeg";
-import yearEndCelebration from "../images/xmas.jpeg";
-import careerDay from "../images/FB_IMG_1791889724638.jpg.jpeg";
+import graduation from "../new images/graduation1.jpeg";
+import yearEndCelebration from "../new images/father xmas 1.jpeg";
+import careerDay from "../new images/general.jpeg";
 
 export const environment = [
   { img: classroom, width: 1100, height: 825, icon: "book", title: "Learning and Classrooms", text: "Modern classrooms that inspire curiosity and critical thinking." },

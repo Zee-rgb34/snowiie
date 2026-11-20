@@ -563,6 +563,7 @@ export default function Home() {
                     name: "Snow White Private Schools",
                   },
             },
+
             {
               ...SCHOOL_ORGANIZATION,
               ...(schoolId ? { "@id": schoolId } : {}),
